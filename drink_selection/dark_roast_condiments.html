@@ -1,0 +1,215 @@
+<!DOCTYPE html>
+<html lang="en">
+
+    <head>
+	<meta charset="UTF-8">
+    	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+    	<title>Guitar Inventory - About</title>
+        <link rel="stylesheet" href="/index.css">
+    </head>
+
+    <body>
+
+        <table class = "nav">
+            <tbody>
+                <tr>
+                    <td><a class="heading" href="../index.html">Coffee Order System</a></td>
+                    <td><div class = "nav-left">
+                        <a class="nav-button" href="../order_status.html">Order Status</a>
+                    </div></td>
+                </tr>
+            </tbody>
+        </table>
+        
+
+        <table>
+            <tbody>
+                <tr>
+                    <td>
+                        <table>
+                            <tbody>
+                                <h1>Select your condiments.</h1>
+                                <tr>
+                                    <td><button class="btn" onclick="addCondiment('Milk')">Milk</button></td>
+                                    <td><button class="btn" onclick="addCondiment('Mocha')">Mocha</button></td>
+                                </tr>
+                                <tr>
+                                    <td><button class="btn" onclick="addCondiment('Soy')">Soy</button></td>
+                                    <td><button class="btn" onclick="addCondiment('Whip')">Whip</button></td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </td>
+                    <td>
+                        <div class="order">
+                            <p class="heading">My Order</p>
+                            <a href="../../drink_selection.html"><button>Dark Roast</button></a>
+                            <div id="toppings">
+
+                            </div>
+                            <button class="confimr" onclick="order()">Confirm Order</button>
+
+                        </div>
+
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+
+
+        <script>
+            let host = "https://localhost:8080/";
+            let whips = 0;
+            let milks = 0;
+            let mochas = 0;
+            let soys = 0;
+
+            function addCondiment(condiment) {
+
+                let order = document.getElementById("toppings");
+                let bt = document.createElement("button");
+                let txt = document.createTextNode(condiment);
+
+                let num = 0;
+                if (condiment == "Whip") {
+                    whips++;
+                    num = whips;
+                }
+                if (condiment == "Milk") {
+                    milks++;
+                    num = milks;
+                }
+                if (condiment == "Soy") {
+                    soys++;
+                    num = soys;
+                }
+                if (condiment == "Mocha") {
+                    mochas++;
+                    num = mochas;
+                }
+
+                bt.id = condiment + num;
+
+                bt.appendChild(txt);
+                order.appendChild(bt);
+
+                if (condiment == "Whip") {
+                    document.getElementById(condiment + num).onclick = function(){removeWhip()};;
+                }
+            }
+
+
+
+
+            function removeWhip() {
+
+                let order = document.getElementById("toppings");
+
+                for (stuff in order.childNodes) {
+                    if (stuff.innerHTML == "Whip") {
+
+                        order.removeChild(stuff);
+                        whips--;
+                        return
+                    }
+                }
+            }
+            function removeMilk() {
+
+                let order = document.getElementById("toppings");
+
+                for (stuff in order.childNodes) {
+                    if (stuff.innerHTML == "Milk") {
+
+                        order.removeChild(stuff);
+                        milks--;
+                        return
+                    }
+                }
+            }
+            function removeSoy() {
+
+                let order = document.getElementById("toppings");
+
+                for (stuff in order.childNodes) {
+                    if (stuff.innerHTML == "Soy") {
+
+                        order.removeChild(stuff);
+                        soys--;
+                        return
+                    }
+                }
+            }
+            function removeMocha() {
+
+                let order = document.getElementById("toppings");
+
+                for (stuff in order.childNodes) {
+                    if (stuff.innerHTML == "Mocha") {
+
+                        order.removeChild(stuff);
+                        mochas--;
+                        return
+                    }
+                }
+            }
+
+            
+            async function getAll(order) {       
+              return fetch(host + "/ducks")
+              .then(response => response.json())
+              .catch(error => {
+                console.log(error);
+                alert("Something went wrong!");
+                return [];
+              });        
+            }
+      
+            async function order() {
+                
+                order_status = "../../order_status.html?";
+
+                let conds = [];
+                for (let i = 0; i < milks; i++) {
+                    conds.concat(["Milk"])
+                }
+                for (let i = 0; i < whips; i++) {
+                    conds.concat(["Whip"])
+                }
+                for (let i = 0; i < soys; i++) {
+                    conds.concat(["Soy"])
+                }
+                for (let i = 0; i < mochas; i++) {
+                    conds.concat(["Mocha"])
+                }
+
+                let cur_order = {
+                    beverage: "Dark Roast",
+                    condiments: conds
+                }
+                
+
+                let request = {
+                  method: "POST",
+
+                  body: JSON.stringify(cur_order)
+                };
+
+
+                response =  fetch(host + "orders/", request)
+                .then(response => response.json())
+                .catch(error => {
+                    console.log(error);
+                    alert("Something went wrong!");
+                });
+
+                
+                window.location.assign(order_status);
+                
+            }
+          </script>
+
+    </body>
+
+</html>
+
