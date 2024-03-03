@@ -8,7 +8,7 @@
         <link rel="stylesheet" href="index.css">
     </head>
 
-    <body>
+    <body onload="fillReciept()">
 
         <table class = "nav">
             <tbody>
@@ -20,7 +20,30 @@
                 </tr>
             </tbody>
         </table>
+
+        <div class="reciept">
+            <p>ID: <span id="recID"></span></p>
+            <p>Price: $<span id="price"></span></p>
+            <p>Description: <span id="desc"></span></p>
+        </div>
         
+
+        <script>
+             function fillReciept() {
+                const queryString = window.location.search;
+                console.log(queryString);
+
+                const urlPm = new URLSearchParams(window.location.search);
+
+                let idspot = document.getElementById("recID");
+                let price = document.getElementById("price");
+                let desc = document.getElementById("desc");
+
+                idspot.innerHTML = urlPm.get("id");
+                price.innerHTML = urlPm.get("price");
+                desc.innerHTML = urlPm.get("desc");
+             }
+        </script>
 
     </body>
 

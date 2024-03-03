@@ -43,7 +43,7 @@
                     <td>
                         <div class="order">
                             <p class="heading">My Order</p>
-                            <a href="../drink_selection.html"><button>Decaf</button></a>
+                            <a href="drink_selection.html"><button>Decaf</button></a>
                             <div id="toppings">
 
                             </div>
@@ -58,7 +58,7 @@
 
 
         <script>
-            let host = "https://localhost:8080/";
+            let host = "https://coffee-order-latest-yv9f.onrender.com/";
             let whips = 0;
             let milks = 0;
             let mochas = 0;
@@ -167,7 +167,7 @@
       
             async function order() {
                 
-                order_status = "../../order_status.html?";
+                order_status = "../order_status.html?";
 
                 let conds = [];
                 for (let i = 0; i < milks; i++) {
@@ -202,6 +202,8 @@
                     console.log(error);
                     alert("Something went wrong!");
                 });
+
+                alert(response.body);
 
                 
                 window.location.assign(order_status);

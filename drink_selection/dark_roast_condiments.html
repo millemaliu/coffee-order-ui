@@ -43,7 +43,7 @@
                     <td>
                         <div class="order">
                             <p class="heading">My Order</p>
-                            <a href="../drink_selection.html"><button>Dark Roast</button></a>
+                            <a href="drink_selection.html"><button>Dark Roast</button></a>
                             <div id="toppings">
 
                             </div>
@@ -58,7 +58,7 @@
 
 
         <script>
-            let host = "https://localhost:8080/";
+            let host = "https://coffee-order-latest-yv9f.onrender.com/";
             let whips = 0;
             let milks = 0;
             let mochas = 0;
@@ -167,7 +167,7 @@
       
             async function order() {
                 
-                order_status = "../../order_status.html?";
+                order_status = "order_status.html?";
 
                 let conds = [];
                 for (let i = 0; i < milks; i++) {
@@ -184,7 +184,7 @@
                 }
 
                 let cur_order = {
-                    beverage: "Dark Roast",
+                    beverage: "dark roast",
                     condiments: conds
                 }
                 
@@ -195,16 +195,20 @@
                   body: JSON.stringify(cur_order)
                 };
 
+                alert(cur_order);
 
-                response =  fetch(host + "orders/", request)
+
+                response = await fetch(host + "orders/", request)
                 .then(response => response.json())
                 .catch(error => {
                     console.log(error);
                     alert("Something went wrong!");
                 });
 
+                alert(response);
+
                 
-                window.location.assign(order_status);
+                window.location.assign(order_status + "id=" + response.json().id + "&price=" + response.json().price + "&desc=" + response.json().description);
                 
             }
           </script>

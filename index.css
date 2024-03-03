@@ -125,3 +125,10 @@ a {
     position: bottom;
     align-self: flex-end;
 }
+
+.reciept {
+    margin-top:30px;
+    font-size: 30px;
+    text-align: center;
+    width: 100vw;
+}
