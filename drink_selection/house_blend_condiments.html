@@ -58,7 +58,7 @@
 
 
         <script>
-            let host = "https://coffee-order-latest-yv9f.onrender.com/";
+            let host = "http://localhost:8080/"; //https://coffee-order-latest-yv9f.onrender.com/";
             let whips = 0;
             let milks = 0;
             let mochas = 0;
@@ -156,7 +156,7 @@
       
             async function order() {
                 
-                order_status = "order_status.html?";
+                order_status = "../../order_status.html?";
 
                 let conds = [];
                 for (let i = 0; i < milks; i++) {
@@ -180,21 +180,25 @@
 
                 let request = {
                   method: "POST",
-
+                  mode: "cors",
+                  headers: {
+                      "Content-Type": "application/json"
+                    
+                  },
+                  
                   body: JSON.stringify(cur_order)
                 };
 
 
 
-                response = await fetch(host + "orders/", request)
-                .then(response => response.json())
-                .catch(error => {
-                    console.log(error);
-                    alert("Something went wrong!");
-                });
-
+                response = await fetch(host + "orders", request);
+                let reciept = response.json();
                 
-                window.location.assign(order_status + "id=" + response.json().id + "&price=" + response.json().price + "&desc=" + response.json().description);
+                if (response.ok) {
+
+                    window.location.assign(order_status + "id=" + reciept.id + "&price=" + reciept.price + "&desc=" + reciept.description);
+                
+                }
                 
             }
           </script>

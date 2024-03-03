@@ -180,13 +180,18 @@
 
                 let request = {
                   method: "POST",
+                  mode: "cors",
+                  headers: {
+                      "Content-Type": "application/json"
+                    
+                  },
 
                   body: JSON.stringify(cur_order)
                 };
 
 
 
-                response = await fetch(host + "orders/", request)
+                response = await fetch(host + "orders", request)
                 .then(response => response.json())
                 .catch(error => {
                     console.log(error);
