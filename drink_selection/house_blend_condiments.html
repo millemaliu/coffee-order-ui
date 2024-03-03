@@ -153,38 +153,27 @@
                     }
                 }
             }
-
-            
-            async function getAll(order) {       
-              return fetch(host + "/ducks")
-              .then(response => response.json())
-              .catch(error => {
-                console.log(error);
-                alert("Something went wrong!");
-                return [];
-              });        
-            }
       
             async function order() {
                 
-                order_status = "../order_status.html?";
+                order_status = "order_status.html?";
 
                 let conds = [];
                 for (let i = 0; i < milks; i++) {
-                    conds.concat(["Milk"])
+                    conds.concat(["milk"])
                 }
                 for (let i = 0; i < whips; i++) {
-                    conds.concat(["Whip"])
+                    conds.concat(["whip"])
                 }
                 for (let i = 0; i < soys; i++) {
-                    conds.concat(["Soy"])
+                    conds.concat(["soy"])
                 }
                 for (let i = 0; i < mochas; i++) {
-                    conds.concat(["Mocha"])
+                    conds.concat(["mocha"])
                 }
 
                 let cur_order = {
-                    beverage: "House Blend",
+                    beverage: "house blend",
                     condiments: conds
                 }
                 
@@ -196,7 +185,8 @@
                 };
 
 
-                response =  fetch(host + "orders/", request)
+
+                response = await fetch(host + "orders/", request)
                 .then(response => response.json())
                 .catch(error => {
                     console.log(error);
@@ -204,7 +194,7 @@
                 });
 
                 
-                window.location.assign(order_status);
+                window.location.assign(order_status + "id=" + response.json().id + "&price=" + response.json().price + "&desc=" + response.json().description);
                 
             }
           </script>
